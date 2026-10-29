@@ -2,7 +2,10 @@
 
 TT-Lang tutorials, programming exercises, and compiler-analysis questions.
 
-Website: https://cs540-tenstorrent-lab.jokeren.chatgpt.site/
+Website: https://deep-learning-profiling-tools.github.io/cs540-tenstorrent-lab/
+
+The website is public; this source repository is private. Pushes to `main`
+rebuild and publish `dist/` through `.github/workflows/pages.yml`.
 
 ## Build and preview
 
