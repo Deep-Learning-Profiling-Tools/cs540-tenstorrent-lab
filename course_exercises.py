@@ -77,21 +77,13 @@ QUESTIONS=[
  dict(title='Register and packing sequence',points=5,prompt='Explain the CHECK expectations for matmul_1x1_bf16 in matmul_block_lowering.mlir. What are we checking?'),
  dict(title='Reduction loop after lowering',points=5,prompt='In the CHECK expectations for matmul_2x4_4x3 in matmul_block_lowering.mlir, give the scf.for lower and upper bounds.'),
  dict(title='Pack-combining transformation',points=5,prompt='Compare the supplied matmul_pack_before.mlir and matmul_pack_after.mlir files. How many packing operations are present before and after the transformation? You do not need to run a compiler.'),
- dict(title='Commands for inspecting IR',points=5,prompt='Using the IR & assembly chapter, answer the following questions (1 point each). Give the option or command and briefly explain its output. You do not need to run the commands.')]
+ dict(title='Circular-buffer lifetimes',points=5,prompt='In matmul_add_accumulator in matmul_block_lowering.mlir, identify the input and output circular buffers. Explain the roles of ttl.cb_wait, ttl.cb_reserve, ttl.cb_push, and ttl.cb_pop.')]
 
 QUESTIONS[6]['details']='<p><a href="downloads/matmul_pack_before.mlir">Before transformation (.mlir)</a> · <a href="downloads/matmul_pack_after.mlir">After transformation (.mlir)</a></p>'
 QUESTIONS[6]['details_markdown']='[Before transformation](matmul_pack_before.mlir) · [After transformation](matmul_pack_after.mlir)'
 
-Q8_ITEMS=[
-    'Which environment variable saves the initial MLIR from a TT-Lang Python invocation?',
-    'Which environment variable saves the final MLIR from that invocation?',
-    'Which environment variable prints IR after each pass in the Python compiler pipeline?',
-    'Which environment variable includes source locations in printed MLIR?',
-    'Write a ttlang-opt command that runs ttl-to-ttkernel-pipeline on input.mlir and prints IR before and after every pass.'
-]
-QUESTIONS[7]['details']='<ol>'+''.join('<li>'+html.escape(t)+'</li>' for t in Q8_ITEMS)+'</ol>'
-QUESTIONS[7]['details_markdown']='\n'.join(str(i)+'. '+t for i,t in enumerate(Q8_ITEMS,1))
-
+QUESTIONS[7]['details']='<p><a href="downloads/matmul_block_lowering.mlir">Read the supplied MLIR file</a></p>'
+QUESTIONS[7]['details_markdown']='[Read the supplied MLIR file](matmul_block_lowering.mlir)'
 
 REPORT_SECTIONS=[
  dict(id='timing',key='timing',title='1. Time reporting',weight=20,items=[
@@ -119,12 +111,12 @@ IR_REPORT_INTRO='Answer all eight questions. Each is worth 5 points out of 100. 
 IR_REPORT_SOURCES=[('matmul_to_compute.mlir','downloads/matmul_to_compute.mlir'),('matmul_block_lowering.mlir','downloads/matmul_block_lowering.mlir'),('matmul_pack_before.mlir','downloads/matmul_pack_before.mlir'),('matmul_pack_after.mlir','downloads/matmul_pack_after.mlir')]
 IR_REPORT_ATTACHMENTS=table(['MLIR file','Questions','Contents'],[
     ['<a href="downloads/matmul_to_compute.mlir" download><code>matmul_to_compute.mlir</code></a>','Q2–Q3','Tensor types, matrix dimensions, and iteration-space checks.'],
-    ['<a href="downloads/matmul_block_lowering.mlir" download><code>matmul_block_lowering.mlir</code></a>','Q4–Q6','Circular buffers, register operations, and reduction loops.'],
+    ['<a href="downloads/matmul_block_lowering.mlir" download><code>matmul_block_lowering.mlir</code></a>','Q4–Q6, Q8','Circular-buffer capacities and lifetimes, register operations, and reduction loops.'],
     ['<a href="downloads/matmul_pack_before.mlir"><code>matmul_pack_before.mlir</code></a>','Q7','Packing region before combining.'],
     ['<a href="downloads/matmul_pack_after.mlir"><code>matmul_pack_after.mlir</code></a>','Q7','Packing region after combining.']])
 
 report+=section('questions','4. IR analysis — 40 points',
     '<p>'+IR_REPORT_INTRO+'</p>'
-    +'<h3>MLIR files for the questions</h3>'+IR_REPORT_ATTACHMENTS+'<p>The first two files are upstream compiler tests with <code>CHECK</code> expectations. The Q7 files are supplied teaching excerpts of the packing region, transcribed from those expectations and the pack-combining implementation. For Q1 and Q8, use the <a href="#compiler">IR &amp; assembly chapter</a>.</p>'
+    +'<h3>MLIR files for the questions</h3>'+IR_REPORT_ATTACHMENTS+'<p>The first two files are upstream compiler tests with <code>CHECK</code> expectations. The Q7 files are supplied teaching excerpts of the packing region, transcribed from those expectations and the pack-combining implementation. For Q1, use the <a href="#compiler">IR &amp; assembly chapter</a>.</p>'
     +'<div id="report-questions"></div>')
 lesson('report','Analysis & report','Time reporting, implementation sketches, optimization and profiling, and eight IR questions.',report)

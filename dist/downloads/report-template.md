@@ -93,15 +93,11 @@ Compare the supplied matmul_pack_before.mlir and matmul_pack_after.mlir files. H
 
 [Your analysis]
 
-### Q8. Commands for inspecting IR — 5 points
+### Q8. Circular-buffer lifetimes — 5 points
 
-Using the IR & assembly chapter, answer the following questions (1 point each). Give the option or command and briefly explain its output. You do not need to run the commands.
+In matmul_add_accumulator in matmul_block_lowering.mlir, identify the input and output circular buffers. Explain the roles of ttl.cb_wait, ttl.cb_reserve, ttl.cb_push, and ttl.cb_pop.
 
-1. Which environment variable saves the initial MLIR from a TT-Lang Python invocation?
-2. Which environment variable saves the final MLIR from that invocation?
-3. Which environment variable prints IR after each pass in the Python compiler pipeline?
-4. Which environment variable includes source locations in printed MLIR?
-5. Write a ttlang-opt command that runs ttl-to-ttkernel-pipeline on input.mlir and prints IR before and after every pass.
+[Read the supplied MLIR file](matmul_block_lowering.mlir)
 
 [Your analysis]
 
