@@ -77,7 +77,7 @@ Explain the CHECK expectations for matmul_1x1_bf16 in matmul_block_lowering.mlir
 
 ### Q6. Reduction loop after lowering — 5 points
 
-In the CHECK expectations for matmul_2x4_4x3 in matmul_block_lowering.mlir, give the scf.for lower and upper bounds. Using the input-index expressions stated in the fixture, list the tile-index pairs passed to matmul_block over the K iterations. Give the ct, rt, and kt arguments, and identify which register-ownership operations remain outside the loop.
+In the CHECK expectations for matmul_2x4_4x3 in matmul_block_lowering.mlir, give the scf.for lower and upper bounds.
 
 
 
