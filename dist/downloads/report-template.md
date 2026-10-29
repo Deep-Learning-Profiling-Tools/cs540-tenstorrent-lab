@@ -53,7 +53,7 @@ In matmul_to_compute.mlir, inspect matmul_2x4_4x3. Write the full types, tile di
 
 ### Q3. Iteration space and indexing maps — 5 points
 
-For matmul_2x4_4x3 in matmul_to_compute.mlir, write the three affine indexing maps for A, B, and the output. Give the iteration bounds and iterator types in (M, N, K) order. Explain which dimension performs the reduction.
+For matmul_2x4_4x3 in matmul_to_compute.mlir, explain the three affine indexing maps for A, B, and the output.
 
 
 
