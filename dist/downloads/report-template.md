@@ -61,7 +61,7 @@ For matmul_2x4_4x3 in matmul_to_compute.mlir, explain the three affine indexing 
 
 ### Q4. Circular-buffer capacities — 5 points
 
-In matmul_2x4_4x3 in matmul_block_lowering.mlir, identify the three ttl.bind_cb declarations and their block_count values. Calculate each buffer’s capacity in tiles and BF16 payload bytes. Match the tile capacities to the !ttkernel.cb types in the CHECK expectations; count payload only.
+In matmul_2x4_4x3 in matmul_block_lowering.mlir, identify the three ttl.bind_cb declarations and their block_count values. Calculate each buffer’s capacity in tiles and BF16 payload bytes.
 
 
 
