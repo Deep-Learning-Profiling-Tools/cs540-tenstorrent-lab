@@ -69,7 +69,7 @@ In matmul_2x4_4x3 in matmul_block_lowering.mlir, identify the three ttl.bind_cb 
 
 ### Q5. Register and packing sequence — 5 points
 
-In the CHECK expectations for matmul_1x1_bf16 in matmul_block_lowering.mlir, list the operations from tile_regs_acquire through tile_regs_release in order. Identify the matrix operation and the operation that writes the result to the output buffer. Explain the roles of commit and wait in this sequence.
+Explain the CHECK expectations for matmul_1x1_bf16 in matmul_block_lowering.mlir. What are we checking?
 
 
 
