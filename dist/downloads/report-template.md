@@ -37,7 +37,7 @@ Answer all eight questions. Each is worth 5 points out of 100. Use the named fun
 
 ### Q1. Host and device compilation paths — 5 points
 
-Draw the path from a Python operation call to execution on the accelerator. Include Python specialization, TTL IR, TTKernel IR, EmitC IR, kernel C++, device ELF files, and dispatch. For each stage, state where the tool runs and where its output is used. Cite the compiler entry point and the device build entry point in the sources listed in the IR & assembly chapter.
+Provide a table of the compilation and execution stages, in sequence, from a TT-Lang Python operation call to execution on the accelerator. Use four columns: stage, execution hardware (CPU or accelerator), input, and output.
 
 
 
