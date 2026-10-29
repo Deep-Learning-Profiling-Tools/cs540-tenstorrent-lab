@@ -30,10 +30,12 @@ Submit the completed report as a separate PDF.
 
 ## 4. IR analysis — 40 points
 
-Answer all eight questions. Each is worth 5 points out of 100. Use the named functions and CHECK expectations in the supplied compiler tests; cite file names and line numbers. These questions can be answered from the linked sources and compiler tests without running a kernel.
+Answer all eight questions. Each is worth 5 points out of 100. Use the supplied MLIR files and linked sources; cite file names and line numbers. No compiler or accelerator access is required.
 
 - [matmul_to_compute.mlir](matmul_to_compute.mlir)
 - [matmul_block_lowering.mlir](matmul_block_lowering.mlir)
+- [matmul_pack_before.mlir](matmul_pack_before.mlir)
+- [matmul_pack_after.mlir](matmul_pack_after.mlir)
 
 ### Q1. Host and device compilation paths — 5 points
 
@@ -85,9 +87,9 @@ In the CHECK expectations for matmul_2x4_4x3 in matmul_block_lowering.mlir, give
 
 ### Q7. Pack-combining transformation — 5 points
 
-Compare CHECK and COMBINED for matmul_2x4_4x3 in matmul_block_lowering.mlir. Name the extra pass in the second RUN line. Count the packing operations before and after it, name their operation types, and state the destination-register and output-buffer tile ranges they cover. Explain why the 1x1 case keeps its existing packing operation.
+Compare the supplied matmul_pack_before.mlir and matmul_pack_after.mlir files. How many packing operations are present before and after the transformation? You do not need to run a compiler.
 
-
+[Before transformation](matmul_pack_before.mlir) · [After transformation](matmul_pack_after.mlir)
 
 [Your analysis]
 

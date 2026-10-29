@@ -81,6 +81,24 @@
     "url": "https://github.com/tenstorrent/tt-metal/blob/7c3dd90a675f0f00316786d01e4f60be42c3c9c0/tt_metal/tt-llk/tt_llk_blackhole/common/inc/ckernel_ops.h",
     "scope": "Selected inline-assembly source from the device library"
   },
+  "q7_mlir_excerpts": {
+    "files": [
+      {
+        "file": "matmul_pack_before.mlir",
+        "sha256": "8b975c0d248e4e245e0e7d1dd138366449910c5022ec06627e66ac8f51955a32"
+      },
+      {
+        "file": "matmul_pack_after.mlir",
+        "sha256": "ff1c2f57745c95c34c23d001be1fec739058dad495dd84061805fa051911baf9"
+      }
+    ],
+    "status": "Manually transcribed teaching excerpts, not compiler captures",
+    "sources": [
+      "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/test/ttlang/Conversion/TTLToTTKernel/matmul_block_lowering.mlir",
+      "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/test/ttlang/Dialect/TTKernel/Transforms/combine_pack_tiles.mlir",
+      "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/lib/Dialect/TTKernel/Transforms/TTKernelCombinePackTiles.cpp"
+    ]
+  },
   "references": [
     {
       "title": "Tenstorrent hardware documentation",
