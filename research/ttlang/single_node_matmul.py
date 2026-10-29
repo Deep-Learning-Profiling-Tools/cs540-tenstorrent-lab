@@ -1,0 +1,114 @@
+# SPDX-FileCopyrightText: (c) 2025 Tenstorrent AI ULC
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# type: ignore
+
+import torch
+import ttl
+import ttnn
+from utils.correctness import assert_pcc
+
+
+@ttl.operation(grid=(1, 1))
+def tt_lang_singlenode_matmul(a: ttnn.Tensor, b: ttnn.Tensor, out: ttnn.Tensor) -> None:
+    assert a.shape[1] == b.shape[0], "Incompatible matrix shapes for multiplication."
+    assert a.shape[0] == out.shape[0], "Output matrix has incorrect number of rows."
+
+    M = a.shape[0]
+    N = b.shape[1]
+    K = a.shape[1]
+    Mt = M // ttnn.TILE_SIZE
+    Kt = K // ttnn.TILE_SIZE
+    Nt = N // ttnn.TILE_SIZE
+
+    dfb_block_count = 2
+    a_dfb = ttl.make_dataflow_buffer_like(a, shape=(1, 1), block_count=dfb_block_count)
+    b_dfb = ttl.make_dataflow_buffer_like(b, shape=(1, 1), block_count=dfb_block_count)
+    out_dfb = ttl.make_dataflow_buffer_like(
+        out, shape=(1, 1), block_count=dfb_block_count
+    )
+
+    @ttl.compute()
+    def mm_compute():
+        for _ in range(Mt):
+            for _ in range(Nt):
+                # Reserve output block once for the entire K accumulation
+                # The reserved block is automatically initialized with zeros
+                with out_dfb.reserve() as out_blk:
+                    # Accumulate over K dimension
+                    acc = ttl.block.fill(0, shape=out_blk.shape)
+                    for _ in range(Kt):
+                        with a_dfb.wait() as a_blk, b_dfb.wait() as b_blk:
+                            acc += a_blk @ b_blk
+                    out_blk.store(acc)
+
+    @ttl.datamovement()
+    def mm_reader():
+        for m in range(Mt):
+            for n in range(Nt):
+                for k in range(Kt):
+                    # Reserve blocks for A and B tiles
+                    with a_dfb.reserve() as a_blk, b_dfb.reserve() as b_blk:
+                        # Copy tiles using tile coordinates
+                        a_wr = ttl.copy(a[m, k], a_blk)
+                        b_wr = ttl.copy(b[k, n], b_blk)
+
+                        a_wr.wait()
+                        b_wr.wait()
+
+    @ttl.datamovement()
+    def mm_writer():
+        for m in range(Mt):
+            for n in range(Nt):
+                # Wait for computed output tile
+                with out_dfb.wait() as out_blk:
+                    # Copy output tile to result tensor
+                    out_wr = ttl.copy(out_blk, out[m, n])
+                    out_wr.wait()
+
+
+def main() -> None:
+    device = ttnn.open_device(device_id=0)
+    try:
+        # Test with reasonably sized matrices that are multiples of tile size.
+        M, K, N = 128, 256, 64
+        a_torch = torch.rand((M, K), dtype=torch.bfloat16)
+        b_torch = torch.rand((K, N), dtype=torch.bfloat16)
+        out_torch = torch.zeros((M, N), dtype=torch.bfloat16)
+
+        a = ttnn.from_torch(
+            a_torch,
+            dtype=ttnn.bfloat16,
+            layout=ttnn.TILE_LAYOUT,
+            device=device,
+            memory_config=ttnn.DRAM_MEMORY_CONFIG,
+        )
+        b = ttnn.from_torch(
+            b_torch,
+            dtype=ttnn.bfloat16,
+            layout=ttnn.TILE_LAYOUT,
+            device=device,
+            memory_config=ttnn.DRAM_MEMORY_CONFIG,
+        )
+        out = ttnn.from_torch(
+            out_torch,
+            dtype=ttnn.bfloat16,
+            layout=ttnn.TILE_LAYOUT,
+            device=device,
+            memory_config=ttnn.DRAM_MEMORY_CONFIG,
+        )
+
+        print(f"Matrix multiplication: ({M}, {K}) @ ({K}, {N}) = ({M}, {N})")
+        print(f"Tiles: A={M//32}x{K//32}, B={K//32}x{N//32}, Out={M//32}x{N//32}")
+
+        tt_lang_singlenode_matmul(a, b, out)
+
+        golden = a_torch @ b_torch
+        assert_pcc(golden.float(), ttnn.to_torch(out).float(), threshold=0.99)
+    finally:
+        ttnn.close_device(device)
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,243 @@
+CS540 MATMUL WALKTHROUGH — ILLUSTRATIVE PLACEHOLDERS
+
+No compilation or assembly capture was performed. Only the Python excerpt is
+actual course source; every lowered representation is an authored teaching sketch.
+Source excerpt adapted from Tenstorrent TT-Lang; Apache-2.0 (see bundled license).
+
+Kernel: matmul.py; A[64,128], B[128,96], out[64,96]; BF16; grid(1,1).
+One-tile blocks, queue depth2; selected output C_tile[1,2].
+
+0 · Source and specialization
+matmul.py · exact compute-kernel excerpt
+
+@ttl.compute()
+def compute():
+    for _ in range(Mt):
+        for _ in range(Nt):
+            with out_dfb.reserve() as out_blk:
+                acc = ttl.block.fill(0, shape=out_blk.shape)
+                for _ in range(Kt):
+                    with a_dfb.wait() as a_blk, b_dfb.wait() as b_blk:
+                        acc += a_blk @ b_blk
+                out_blk.store(acc)
+
+The source is matmul(a,b,out), with A[64,128], B[128,96], and C[64,96]. Each queue has
+two slots, and each slot holds one 32×32 BF16 tile. The tile counts are therefore Mt=2,
+Nt=3, and Kt=4.
+
+Follow output C_tile[1,2]. Its accumulator starts at zero and receives four tile
+products. Across all six outputs, each input queue supplies 24 blocks and the output
+queue supplies six. The frontend specializes the source using tensor metadata and
+captured configuration; tensor values remain runtime inputs.
+
+1 · Python control flow and TTL IR
+PLACEHOLDER · initial TTL sketch · abbreviated MLIR notation
+
+// PLACEHOLDER: illustrative structure, NOT a compiler dump.
+// Each input block type is tensor<1x1x!ttcore.tile<32x32,bf16>>.
+// Types/attributes/constant definitions omitted; ACC_T is unresolved.
+scf.for %m = %c0 to %c2 step %c1 {
+  scf.for %n = %c0 to %c3 step %c1 {
+    %out = ttl.cb_reserve ...
+    %zero = <zero block from ttl.block.fill>
+    %final = scf.for %k = %c0 to %c4 step %c1
+        iter_args(%acc = %zero) -> (<ACC_T>) {
+      %a = ttl.cb_wait ...
+      %b = ttl.cb_wait ...
+      %product = ttl.matmul %a, %b ...
+      %next = ttl.add %acc, %product ...
+      ttl.cb_pop ...  // release A after its use
+      ttl.cb_pop ...  // release B after its use
+      scf.yield %next : <ACC_T>
+    }
+    ttl.store %final, %out ...
+    ttl.cb_push ...
+  }
+}
+
+In Python, acc += ... reassigns a variable. In SSA form, the K loop receives an
+accumulator value, computes its successor, and yields that value to the next iteration.
+After the fourth iteration, the loop result is stored in the output block. Replacing
+this recurrence with four independent stores would lose the earlier products.
+
+The with scopes become buffer operations as well. Acquiring an input waits for a
+published block, and leaving its scope releases it. The output reservation spans the
+whole K loop, so publication occurs after the reduction. SSA names identify values;
+allocation passes later decide where to store them.
+
+2 · Block arithmetic to tile computation
+PLACEHOLDER · compute/tile representation · explanatory notation
+
+// PLACEHOLDER: local recipe for ONE acquired A/B block pair.
+// The outer source K loop still has four iterations.
+local tile iteration extent = (m_local=1, n_local=1, k_local=1)
+A map: (m_local,n_local,k_local) -> (m_local,k_local)
+B map: (m_local,n_local,k_local) -> (k_local,n_local)
+C map: (m_local,n_local,k_local) -> (m_local,n_local)
+iterators = [parallel, parallel, reduction]
+
+ttl.compute ... {
+  %product = ttl.tile_matmul_block ...
+  <accumulator update / tile store or yield, as selected by lowering>
+}
+
+One @ in this source multiplies a single A tile by a single B tile. Its local recipe has
+one tile along each axis. The scalar dot products inside that tile have length 32; four
+iterations of the outer K loop cover scalar K=128.
+
+The compiler forms compute regions and introduces tile indexing maps and iterator kinds.
+It also materializes intermediate values in buffers where their uses require storage.
+Throughout this process, the outer loops still describe six outputs, each with four K
+terms.
+
+The separate 2×4 @ 4×3 block fixture in chapter 04 represents a larger block expression.
+It covers the same matrix dimensions with a different block size and comes from an
+independent compiler test.
+
+3 · Accumulator and queue storage
+PLACEHOLDER · resource plan · physical assignments await capture
+
+PLACEHOLDER RESOURCE PLAN — NOT AN ALLOCATION DUMP
+A queue:   1 tile/block × 2 blocks × 2,048 B = 4,096 B
+B queue:   1 tile/block × 2 blocks × 2,048 B = 4,096 B
+Out queue: 1 tile/block × 2 blocks × 2,048 B = 4,096 B
+Declared queue payload:                         12,288 B
+
+Accumulator across K:
+  initial value: zero tile
+  update: previous accumulator + A_tile @ B_tile
+  storage strategy: <record actual DST or L1 decision>
+  precision/configuration: <record actual compiler decision>
+
+Physical CB indices/addresses: <capture later>
+Compiler-created buffers:     <capture later>
+DST slots and sync boundaries: <capture later>
+
+The accumulator must survive all four K iterations. Recurrence analysis starts before
+tile conversion; this stage groups its storage consequences for discussion. A DST
+strategy and an L1 pack/reload strategy can differ in both traffic and numerical
+behavior. A real capture is needed to identify the choice for this kernel.
+
+The three declared BF16 queues occupy 12 KiB per core. That total excludes compiler-
+created buffers, alignment, code, and runtime storage. Their logical names also do not
+determine physical CB indices or addresses.
+
+One output tile fits within the usual four-tile FP32 double-buffered DST section. The
+allocator must still account for other live values and the selected configuration.
+Inputs remain live through their last use, and the writer must finish its output
+transfer before the output slot can be reused.
+
+4 · TTKernel operations and synchronization
+PLACEHOLDER · TTKernel operation families · partial ordering sketch
+
+// PLACEHOLDER: representative operation families for this source.
+reader:
+  ttkernel.cb_reserve_back ...        // obtain input capacity
+  <NoC reads for the selected A and B tiles>
+  <read completion before publication>
+  ttkernel.cb_push_back ...
+
+compute:
+  ttkernel.cb_wait_front ...          // acquire each input
+  <DST acquire / accumulator restoration at selected boundaries>
+  ttkernel.matmul_block ...           // one local tile product
+  <lower the accumulator update and preserve its state>
+  <commit / wait / pack / release at selected boundaries>
+  ttkernel.cb_pop_front ...           // release consumed input
+
+writer:
+  ttkernel.cb_wait_front ...          // completed output only
+  <NoC write and write completion>
+  ttkernel.cb_pop_front ...
+
+// Positions/counts of tile_regs_* and pack calls require actual IR.
+// Output publication remains once per completed K reduction.
+
+At this stage, buffer operations use circular-buffer APIs and arithmetic uses compute
+APIs such as matmul_block. Source copy waits become transfer-completion operations;
+scope exits become queue publication or release; output stores require materialization
+and packing.
+
+DST synchronization coordinates math and pack. Acquisition grants ownership, commit/wait
+establishes the handoff, and release permits reuse. The selected accumulation strategy
+determines where these operations appear, so the sketch leaves those boundaries
+unresolved. Input and output block counts alone cannot tell us how many internal pack or
+register-synchronization calls will be emitted.
+
+Check the transfer boundaries too: the reader completes both input copies before
+publishing, and the writer completes its copy before releasing the output slot.
+
+5 · EmitC and device C++
+PLACEHOLDER · C++ pseudocode · authored teaching outline
+
+// PLACEHOLDER: source-level loop structure and API families only.
+// Definitions, arguments, config, and exact accumulator path omitted.
+void compute_kernel() {
+  for (unsigned m = 0; m < 2; ++m) {
+    for (unsigned n = 0; n < 3; ++n) {
+      cb_reserve_back(/* output CB, one tile */);
+      /* initialize accumulator using the selected storage strategy */
+      for (unsigned k = 0; k < 4; ++k) {
+        cb_wait_front(/* A CB, one tile */);
+        cb_wait_front(/* B CB, one tile */);
+        /* selected initialization, DST synchronization and restore */
+        matmul_block(/* actual generated operands and tile arguments */);
+        /* selected accumulation / materialization */
+        cb_pop_front(/* A CB, one tile */);
+        cb_pop_front(/* B CB, one tile */);
+      }
+      /* pack final result and finish its destination handoff */
+      cb_push_back(/* output CB, one tile */);
+    }
+  }
+}
+
+EmitC represents calls, types, expressions, and control flow that can be translated to
+C++. The resulting source is compiled with the target libraries and configuration. The
+outline shows the original m, n, and k loops and representative API families; their
+exact arguments and accumulator implementation await a real capture.
+
+Reader and writer produce separate generated source, while compute code supports the
+unpack, math, and pack control roles. Keep these identities when collecting the
+corresponding binaries.
+
+The device compiler may inline calls, fold constants, or unroll loops. Follow the output
+values and their dependencies across these changes: the implementation must still
+produce six output tiles from four K terms each.
+
+6 · Device instructions
+PLACEHOLDER · symbolic assembly outline · no ELF or disassembly captured
+
+# PLACEHOLDER: NOT real disassembly; no addresses or encodings.
+# One possible unrolled-or-looped K region, shown as a loop here.
+# <...> marks unresolved code and register placeholders.
+
+    <initialize k register to 0 and bound register to 4>
+.L_k:
+    <input wait / readiness implementation>
+    <accumulator restore and DST synchronization, if required>
+    <Tensix matrix-engine instruction-issue sequence>
+    <accumulator update / preservation>
+    <input-release implementation>
+    addi <k_reg>, <k_reg>, 1
+    blt  <k_reg>, <bound_reg>, .L_k
+    <final packing and output publication>
+
+# addi/blt illustrate scalar RISC-V loop control only.
+# Actual code may use different branches or unroll the loop.
+# Matrix instructions and exact synchronization await target capture.
+
+The displayed addi and blt illustrate scalar RISC-V loop control. The matrix product is
+issued to the Tensix compute machinery in the unresolved region. Its actual
+instructions, registers, addresses, and synchronization sequence depend on the target
+binary.
+
+With a matching ELF, select a short region and map it back to generated C++ and the
+accumulator path. Identify the processor role and distinguish instruction issue from the
+wait or dependency that establishes completion. The compiler may also unroll the K loop,
+so the loop shown here is only one possible structure.
+
+No ELF was captured for this walkthrough. Instruction counts and timing must come from a
+later compilation and execution, with the source, shape, flags, toolchain, and target
+recorded together.
+

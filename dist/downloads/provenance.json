@@ -1,0 +1,146 @@
+{
+  "retrieved": "2026-10-16",
+  "repository": "tenstorrent/tt-lang",
+  "commit": "a47484458bd964a6b92c9e4698aeb922585f08cc",
+  "license": "Apache-2.0",
+  "license_url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/LICENSE",
+  "notice_url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/NOTICE",
+  "scope": "Compiler fixtures are exact upstream inputs. Teaching kernels are adaptations. No device compilation or timing performed during authoring.",
+  "files": [
+    {
+      "file": "matmul_to_compute.mlir",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/test/ttlang/Conversion/TTLToCompute/matmul_to_compute.mlir",
+      "git_blob_sha": "bb451c90818e3c9ea78bf065f0b1a0392e5e05a8",
+      "modified": false
+    },
+    {
+      "file": "matmul_block_lowering.mlir",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/test/ttlang/Conversion/TTLToTTKernel/matmul_block_lowering.mlir",
+      "git_blob_sha": "800bc5b6c750a4620cfd8a53231f38469a87ec30",
+      "modified": false
+    }
+  ],
+  "teaching_files": [
+    {
+      "file": "matmul.py",
+      "sha256": "a0da1807a6053a0eea2b44ffb4bd3c0ef8d5f14c06d23e8c25f7308ff38caf18",
+      "modified": true,
+      "scope": "Course teaching adaptation; source review complete; device tests pending"
+    },
+    {
+      "file": "matmul_larger.py",
+      "sha256": "ca16e16fb48d4fcd09e261bd9e3b618892a76d140a9e9e5d421d2a8ec3b22c1b",
+      "modified": true,
+      "scope": "Course teaching adaptation; source review complete; device tests pending"
+    },
+    {
+      "file": "pytorch_baselines.py",
+      "sha256": "b31adb61565f28d1a5a389107f3f9b60c775c50954fd7aa8e5f5a5815abaf15b",
+      "modified": true,
+      "scope": "Course teaching adaptation; source review complete; device tests pending"
+    },
+    {
+      "file": "vector_add.py",
+      "sha256": "23ddec094c2b77d32d3d4b3ea40b4c3c246a240254ad8b9d1a9fe33fe3f093e2",
+      "modified": true,
+      "scope": "Course teaching adaptation; source review complete; device tests pending"
+    },
+    {
+      "file": "check_references.py",
+      "sha256": "d50e2ab56ade0a2c92563e9ccb66de398d03c2840940ffd532f2133532076d2d",
+      "modified": true,
+      "scope": "Course teaching adaptation; source review complete; device tests pending"
+    },
+    {
+      "file": "ragged_baselines.py",
+      "sha256": "7acf82cbac803d49a008b93e3b52c48e29e1119508720e88182813670d4c698c",
+      "modified": true,
+      "scope": "Course teaching adaptation; source review complete; device tests pending"
+    },
+    {
+      "file": "reference.py",
+      "sha256": "575409cdedca8adacd49e31ee5dae6d07f33cde4677f176b9b1412613967cb1b",
+      "modified": true,
+      "scope": "Course teaching adaptation; source review complete; device tests pending"
+    },
+    {
+      "file": "matmul_blocked.py",
+      "sha256": "aebb9e13ab313e3ea68b01c7af9318fed3f465f960af9272c9de7485c436da74",
+      "modified": true,
+      "scope": "Course teaching adaptation; source review complete; device tests pending"
+    }
+  ],
+  "illustrative_matmul_trace": {
+    "file": "matmul-trace-placeholders.txt",
+    "status": "Authored placeholders; compiler capture pending",
+    "source_file": "matmul.py",
+    "source_sha256": "a0da1807a6053a0eea2b44ffb4bd3c0ef8d5f14c06d23e8c25f7308ff38caf18",
+    "manifest": "matmul-capture-manifest.json"
+  },
+  "blackhole_macros": {
+    "url": "https://github.com/tenstorrent/tt-metal/blob/7c3dd90a675f0f00316786d01e4f60be42c3c9c0/tt_metal/tt-llk/tt_llk_blackhole/common/inc/ckernel_ops.h",
+    "scope": "Selected inline-assembly source from the device library"
+  },
+  "references": [
+    {
+      "title": "Tenstorrent hardware documentation",
+      "url": "https://docs.tenstorrent.com/index.html"
+    },
+    {
+      "title": "Tensix ISA manual",
+      "url": "https://github.com/tenstorrent/tt-isa-documentation/blob/8a34e25e04d1ad7dd129ac9231e126b85923fac3/README.md"
+    },
+    {
+      "title": "Official TT-Lang tour",
+      "url": "https://docs.tenstorrent.com/tt-lang/tour/index.html"
+    },
+    {
+      "title": "Official TT-Lang documentation",
+      "url": "https://docs.tenstorrent.com/tt-lang/"
+    },
+    {
+      "title": "TT-Lang specification",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/docs/sphinx/specs/TTLangSpecification.md"
+    },
+    {
+      "title": "Compiler options",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/docs/sphinx/reference/compiler-options.md"
+    },
+    {
+      "title": "Single-node matmul",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/single_node_matmul.py"
+    },
+    {
+      "title": "Multi-tile matmul",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/matmul-tutorial/step_2_single_node_multitile_block.py"
+    },
+    {
+      "title": "Full-grid matmul",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/matmul-tutorial/step_4_multinode_grid_full.py"
+    },
+    {
+      "title": "Local-reuse matmul",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/metal_examples/multinode_reuse_matmul/ttlang/multinode_reuse_matmul.py"
+    },
+    {
+      "title": "2D multicast matmul",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/metal_examples/2d_mcast_matmul/ttlang/2d_mcast_matmul.py"
+    },
+    {
+      "title": "Metalium Lab1",
+      "url": "https://docs.tenstorrent.com/tt-metal/latest/tt-metalium/tt_metal/labs/matmul/lab1/lab1.html"
+    },
+    {
+      "title": "Metalium Lab2",
+      "url": "https://docs.tenstorrent.com/tt-metal/latest/tt-metalium/tt_metal/labs/matmul/lab2/lab2.html"
+    },
+    {
+      "title": "Metalium Lab3",
+      "url": "https://docs.tenstorrent.com/tt-metal/latest/tt-metalium/tt_metal/labs/matmul/lab3/lab3.html"
+    },
+    {
+      "title": "Course platform",
+      "url": "http://98.93.3.136:28888/"
+    }
+  ]
+}

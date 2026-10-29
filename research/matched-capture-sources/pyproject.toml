@@ -1,0 +1,96 @@
+[build-system]
+requires = [
+  "setuptools>=61.0",
+  "cmake",
+  "nanobind",
+  "wheel",
+  "pip",
+  "ninja",
+  "packaging",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tt-lang"
+description = "Python Bindings and Package for TT-Lang Compiler Project"
+requires-python = ">=3.10"
+keywords = ["mlir", "tt-lang", "tenstorrent", "compiler", "dsl", "kernel"]
+license = "Apache-2.0"
+license-files = ["LICENSE*"]
+authors = [
+  {name = "Tenstorrent AI ULC"}
+]
+maintainers = [
+  {name = "Tenstorrent AI ULC"}
+]
+
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Operating System :: POSIX :: Linux",
+  "Operating System :: MacOS",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: C++",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Compilers",
+  "Topic :: Software Development :: Code Generators"
+]
+
+dynamic = ["version", "readme", "dependencies"]
+
+# `dependencies` is dynamic: setup.py reads requirements-runtime.txt and
+# appends a platform-conditional `ttnn` requirement derived from
+# third-party/tt-metal-version, so the ttnn version only ever lives in one
+# place. ttnn installs automatically on Linux x86_64 / aarch64 (where ttnn
+# publishes wheels); on macOS / Windows the marker skips it and users
+# wanting a sim-only install should `pip install tt-lang-sim` instead (that
+# wheel bundles `tt-lang-sim` and `tt-lang-sim-stats`; there is no separate stats
+# package). The version file also records the tt-metal tag used to build that
+# ttnn wheel so public PyPI publishing can reject mismatched releases. Internal
+# wheels can set TTLANG_TTNN_DEP_MODE=external at build time to omit the ttnn
+# dependency and use an existing tt-metal/ttnn install.
+
+[project.scripts]
+tt-lang-sim = "ttl.sim.ttlang_sim:main"
+tt-lang-sim-stats = "sim_stats.__main__:main"
+tt-lang-setup = "ttl._setup.cli:main"
+tt-lang-setup-external-tt-metal = "ttl._setup.external_tt_metal:main"
+tt-lang-setup-sfpi = "ttl._setup.sfpi:main"
+tt-lang-setup-tutorials = "ttl._setup.tutorials:main"
+
+[project.urls]
+Homepage = "https://github.com/tenstorrent/tt-lang"
+Repository = "https://github.com/tenstorrent/tt-lang"
+Issues = "https://github.com/tenstorrent/tt-lang/issues"
+
+[tool.pyright]
+typeCheckingMode = "strict"
+reportMissingParameterType = "error"
+reportMissingTypeStubs = "warning"
+reportMissingImports = "error"
+reportUnknownParameterType = "error"
+reportUnknownArgumentType = "error"
+reportUnknownVariableType = "error"
+reportUnknownMemberType = "error"
+reportUntypedFunctionDecorator = "error"
+reportPrivateUsage = "error"
+reportImportCycles = "error"
+reportUnnecessaryIsInstance = "warning"
+
+[tool.pytest.ini_options]
+markers = [
+    "requires_ttnn: marks simulator tests that compare against real ttnn goldens or otherwise require ttnn",
+    "matmul_tutorial: marks matmul-tutorial simulator tests, steps 0 and 2-7 (deselected by default; enable with --run-matmul-tutorial-dry)",
+]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true

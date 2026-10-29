@@ -1,0 +1,120 @@
+{
+  "retrieved": "2026-10-16",
+  "repository": "tenstorrent/tt-lang",
+  "commit": "a47484458bd964a6b92c9e4698aeb922585f08cc",
+  "license": "Apache-2.0",
+  "license_url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/LICENSE",
+  "notice_url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/NOTICE",
+  "scope": "Unmodified upstream sources for static reading. No local compiler or hardware execution.",
+  "files": [
+    {
+      "file": "step_1_single_node_single_tile_block.py",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/matmul-tutorial/step_1_single_node_single_tile_block.py",
+      "git_blob_sha": "b5d86861dadeed19993510000ffaabf60aab7787",
+      "modified": false
+    },
+    {
+      "file": "step_2_single_node_multitile_block.py",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/matmul-tutorial/step_2_single_node_multitile_block.py",
+      "git_blob_sha": "da777c82208dfd07d9edd446e31638640e4d0c0c",
+      "modified": false
+    },
+    {
+      "file": "step_3_multinode.py",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/matmul-tutorial/step_3_multinode.py",
+      "git_blob_sha": "e8ff021f587b2740167eeedcf607f9ea2ca69a3b",
+      "modified": false
+    },
+    {
+      "file": "step_4_multinode_grid_full.py",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/matmul-tutorial/step_4_multinode_grid_full.py",
+      "git_blob_sha": "7f52220efbd7548caebb1a485d8005bd7133ccb1",
+      "modified": false
+    },
+    {
+      "file": "single_node_matmul.py",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/single_node_matmul.py",
+      "git_blob_sha": "73a02d4fa562f1fb5dcafd37148a68d873e870a4",
+      "modified": false
+    },
+    {
+      "file": "simple_matmul_test.py",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/test/python/simple_matmul.py",
+      "git_blob_sha": "ba70486c642d193ea7d335b2be470e7e7b34292a",
+      "modified": false
+    },
+    {
+      "file": "matmul_to_compute.mlir",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/test/ttlang/Conversion/TTLToCompute/matmul_to_compute.mlir",
+      "git_blob_sha": "bb451c90818e3c9ea78bf065f0b1a0392e5e05a8",
+      "modified": false
+    },
+    {
+      "file": "matmul_block_lowering.mlir",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/test/ttlang/Conversion/TTLToTTKernel/matmul_block_lowering.mlir",
+      "git_blob_sha": "800bc5b6c750a4620cfd8a53231f38469a87ec30",
+      "modified": false
+    },
+    {
+      "file": "compiler-options.md",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/docs/sphinx/reference/compiler-options.md",
+      "git_blob_sha": "87ebcac4b4bfa41d8f9d6382c81c87b2ab3b5ed1",
+      "modified": false
+    },
+    {
+      "file": "TTLangSpecification.md",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/docs/sphinx/specs/TTLangSpecification.md",
+      "git_blob_sha": "8596e13b2e73e6f13861f3f0160498dcdc708c90",
+      "modified": false
+    },
+    {
+      "file": "LICENSE",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/LICENSE",
+      "git_blob_sha": "a938a36c93903ccf69d066d842559a29e965dcaa",
+      "modified": false
+    },
+    {
+      "file": "NOTICE",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/NOTICE",
+      "git_blob_sha": "b7bab320c0fec47eb09a7ca2d46acd06319dfea7",
+      "modified": false
+    },
+    {
+      "file": "multinode_reuse_matmul.py",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/metal_examples/multinode_reuse_matmul/ttlang/multinode_reuse_matmul.py",
+      "git_blob_sha": "d8c0ac97e4f7bd46657bb58e2f6b3692ecc7333d",
+      "modified": false
+    },
+    {
+      "file": "multicast_1d_matmul.py",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/metal_examples/1d_mcast_matmul/ttlang/1d_tt_lang.py",
+      "git_blob_sha": "2bb58c4a3b788f2af3acb75c0ae2066e5d2908bf",
+      "modified": false
+    },
+    {
+      "file": "multicast_2d_matmul.py",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/metal_examples/2d_mcast_matmul/ttlang/2d_mcast_matmul.py",
+      "git_blob_sha": "2a835cb6a637c81a139107843f17e214252562bf",
+      "modified": false
+    },
+    {
+      "file": "PassesModule.cpp",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/python/ttlang/PassesModule.cpp",
+      "git_blob_sha": "8f882df5a4ae85e2ae3e1b0dadb84c52bb0ba91a",
+      "modified": false
+    },
+    {
+      "file": "softmax_compiler_allocated_dfb.py",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/test/python/softmax_compiler_allocated_dfb.py",
+      "git_blob_sha": "1f8fb5aa20b1559c54d40c8e65fd3af1c04fc6c4",
+      "modified": false
+    },
+    {
+      "file": "ttl_api_excerpts.py",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/python/ttl/ttl_api.py",
+      "git_blob_sha": "75f014c48ffa0a0fe9087dd707febfab6902c11b",
+      "modified": true,
+      "modification": "Selected exact line excerpts with attribution header; not standalone executable."
+    }
+  ]
+}

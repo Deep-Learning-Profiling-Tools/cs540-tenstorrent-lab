@@ -1,0 +1,141 @@
+{
+  "repo": "tenstorrent/tt-lang",
+  "revision": "a47484458bd964a6b92c9e4698aeb922585f08cc",
+  "fetched_sources": [
+    {
+      "path": "LICENSE",
+      "blob_sha": "a938a36c93903ccf69d066d842559a29e965dcaa",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/LICENSE"
+    },
+    {
+      "path": "README.md",
+      "blob_sha": "7ffc3491ebfde114f05f77337f83c56e110a62de",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/README.md"
+    },
+    {
+      "path": "examples/eltwise_broadcast_reduce.py",
+      "blob_sha": "ca4e5960275bb0cf2857ce4d0a8d9e20833ba5f7",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/eltwise_broadcast_reduce.py"
+    },
+    {
+      "path": "examples/eltwise_add.py",
+      "blob_sha": "6416e16836fb4bf9ffb0176c49c814a6cfd1dae9",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/eltwise_add.py"
+    },
+    {
+      "path": "benchmarks/softmax/online_softmax_accumulators.py",
+      "blob_sha": "621b4fa5b945ef704706f3e2607acd61b51ebb85",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/benchmarks/softmax/online_softmax_accumulators.py"
+    },
+    {
+      "path": "examples/elementwise-tutorial/step_4_multinode_grid_full.py",
+      "blob_sha": "b85f28fdd034c826225ed5670d63ad53e8d0f207",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/elementwise-tutorial/step_4_multinode_grid_full.py"
+    },
+    {
+      "path": "examples/elementwise-tutorial/step_2_single_node_multitile_block.py",
+      "blob_sha": "a96662e70784d72f103e44275a7bd5694fd1579c",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/examples/elementwise-tutorial/step_2_single_node_multitile_block.py"
+    },
+    {
+      "path": "docs/sphinx/simulator.md",
+      "blob_sha": "ef325bd2fb751e1c597a1550305ea97bf0af3a2b",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/docs/sphinx/simulator.md"
+    },
+    {
+      "path": "docs/sphinx/getting-started.md",
+      "blob_sha": "d0d82bfabe69ea68135407d70364bd7a78a21559",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/docs/sphinx/getting-started.md"
+    },
+    {
+      "path": "docs/sphinx/simulator-getting-started.md",
+      "blob_sha": "5f5b56dec1d483291e0b2cb72c99e97f3a684f09",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/docs/sphinx/simulator-getting-started.md"
+    },
+    {
+      "path": "docs/sphinx/specs/TTLangSpecification.md",
+      "blob_sha": "8596e13b2e73e6f13861f3f0160498dcdc708c90",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/docs/sphinx/specs/TTLangSpecification.md"
+    },
+    {
+      "path": "docs/sphinx/tour/index.md",
+      "blob_sha": "edf9dddad0522a5a6d02f11bb8bfd1eca3327d87",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/docs/sphinx/tour/index.md"
+    },
+    {
+      "path": "docs/sphinx/reference/compiler-options.md",
+      "blob_sha": "87ebcac4b4bfa41d8f9d6382c81c87b2ab3b5ed1",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/docs/sphinx/reference/compiler-options.md"
+    },
+    {
+      "path": "docs/sphinx/reference/operation-runtime-resources.md",
+      "blob_sha": "fb8272768fcff395d5c9bfb07acf670a1a14e127",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/docs/sphinx/reference/operation-runtime-resources.md"
+    },
+    {
+      "path": "python/ttl/ttl_block.py",
+      "blob_sha": "306c61f1e9adcc4e889b126bd50036cd8ab9131d",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/python/ttl/ttl_block.py"
+    },
+    {
+      "path": "python/ttl/ttl_math.py",
+      "blob_sha": "6cd36cf360b3e98efab957dbd748c03c503aad91",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/python/ttl/ttl_math.py"
+    },
+    {
+      "path": "python/ttl/ttl_api.py",
+      "blob_sha": "75f014c48ffa0a0fe9087dd707febfab6902c11b",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/python/ttl/ttl_api.py"
+    },
+    {
+      "path": "python/ttl/__init__.py",
+      "blob_sha": "d584c7202addaa66319e7d2b6c2f7cf14fa499ed",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/python/ttl/__init__.py"
+    },
+    {
+      "path": "python/ttl/ttl.py",
+      "blob_sha": "06e346ebb4a0436503ee3ac9a8b4235306679762",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/python/ttl/ttl.py"
+    },
+    {
+      "path": "python/ttl/compiler_options.py",
+      "blob_sha": "26a2a017e555cf544d6071d0f77a4bb56f4b69d5",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/python/ttl/compiler_options.py"
+    },
+    {
+      "path": "python/ttl/operators.py",
+      "blob_sha": "7f65d39ca9ae249b97d5836c39cc4ad00a42bf4f",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/python/ttl/operators.py"
+    },
+    {
+      "path": "python/sim/__init__.py",
+      "blob_sha": "b970e69c75fd2cadc3935029c7bced21bf4acaee",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/python/sim/__init__.py"
+    },
+    {
+      "path": "python/sim/math.py",
+      "blob_sha": "224d1d627583ab4b8769978f76a1e3b98aefdc66",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/python/sim/math.py"
+    },
+    {
+      "path": "test/python/softmax_compiler_allocated_dfb.py",
+      "blob_sha": "1f8fb5aa20b1559c54d40c8e65fd3af1c04fc6c4",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/test/python/softmax_compiler_allocated_dfb.py"
+    },
+    {
+      "path": "test/python/simple_reduce.py",
+      "blob_sha": "acd4162809fe7d626b3404cd62005737f80d595a",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/test/python/simple_reduce.py"
+    },
+    {
+      "path": "test/python/test_reduce.py",
+      "blob_sha": "452fb0b740358366a2dfb6d14999ce194783ce5f",
+      "url": "https://github.com/tenstorrent/tt-lang/blob/a47484458bd964a6b92c9e4698aeb922585f08cc/test/python/test_reduce.py"
+    }
+  ],
+  "local_adaptations": [
+    "vector_add_baseline.py",
+    "ragged_baselines.py"
+  ],
+  "validation": "Python AST parsing only. No TT-Lang compiler, simulator, emulator or hardware execution."
+}

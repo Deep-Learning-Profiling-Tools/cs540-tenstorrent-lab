@@ -1,0 +1,58 @@
+{
+  "status": "placeholder_template_not_a_compilation_record",
+  "compiled": false,
+  "executed": false,
+  "source": {
+    "file": "matmul.py",
+    "sha256": "a0da1807a6053a0eea2b44ffb4bd3c0ef8d5f14c06d23e8c25f7308ff38caf18"
+  },
+  "intended_specialization": {
+    "a_shape": [
+      64,
+      128
+    ],
+    "b_shape": [
+      128,
+      96
+    ],
+    "out_shape": [
+      64,
+      96
+    ],
+    "input_output_dtype": "BF16",
+    "layout": "tiled",
+    "tile_shape": [
+      32,
+      32
+    ],
+    "grid": [
+      1,
+      1
+    ],
+    "dfb_block_shape": [
+      1,
+      1
+    ],
+    "dfb_depth": 2
+  },
+  "actual_capture": {
+    "run_id": null,
+    "ttlang_revision": null,
+    "ttmetal_revision": null,
+    "sfpi_revision": null,
+    "target_architecture": null,
+    "board_and_stepping": null,
+    "compiler_options": null,
+    "compute_configuration": null,
+    "artifacts": {
+      "initial_ttl": null,
+      "per_pass_checkpoints": null,
+      "ttkernel": null,
+      "final_mlir": null,
+      "generated_cpp_by_role": null,
+      "elf_by_processor": null,
+      "disassembly_by_processor": null
+    }
+  },
+  "instructions": "Replace null fields only with values from one real capture. Record paths and SHA-256 for each artifact. Do not substitute these illustrative sketches for generated outputs."
+}

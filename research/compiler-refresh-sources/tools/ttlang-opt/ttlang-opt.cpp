@@ -1,0 +1,50 @@
+// SPDX-FileCopyrightText: (c) 2025 Tenstorrent AI ULC
+//
+// SPDX-License-Identifier: Apache-2.0
+
+#include "ttlang/Config.h"
+#include "ttlang/Dialect/TTL/IR/TTL.h"
+
+#include "mlir/IR/MLIRContext.h"
+#include "mlir/InitAllDialects.h"
+#include "mlir/InitAllPasses.h"
+#include "mlir/Support/FileUtilities.h"
+#include "mlir/Tools/mlir-opt/MlirOptMain.h"
+#include "ttlang/Conversion/TTKernelToEmitC/TTKernelToEmitC.h"
+#include "ttlang/Dialect/TTCore/IR/TTCore.h"
+#include "ttlang/Dialect/TTCore/IR/TTCoreOps.h"
+#include "ttlang/Dialect/TTKernel/IR/TTKernel.h"
+#include "ttlang/Dialect/TTL/Passes.h"
+#include "ttlang/Dialect/TTL/Pipelines/TTLPipelines.h"
+#include "llvm/Support/CommandLine.h"
+
+int main(int argc, char **argv) {
+  llvm::cl::AddExtraVersionPrinter([](llvm::raw_ostream &os) {
+    os << "ttlang-opt version " << TTLANG_VERSION << "\n";
+  });
+
+  // Register upstream MLIR passes
+  mlir::registerAllPasses();
+
+  // Register TTKernel-to-EmitC conversion pass
+  mlir::registerPass([]() { return mlir::tt::createConvertTTKernelToEmitC(); });
+
+  // Register tt-lang passes and pipelines
+  mlir::tt::ttl::registerTTLPasses();
+  mlir::tt::ttl::registerTTLPipelines();
+
+  mlir::DialectRegistry registry;
+
+  // Register upstream MLIR dialects
+  mlir::registerAllDialects(registry);
+
+  // Register the owned ttcore/ttkernel dialects
+  registry.insert<mlir::tt::ttcore::TTCoreDialect>();
+  registry.insert<mlir::tt::ttkernel::TTKernelDialect>();
+
+  // Register tt-lang dialects
+  registry.insert<mlir::tt::ttl::TTLDialect>();
+
+  return mlir::asMainReturnCode(
+      mlir::MlirOptMain(argc, argv, "ttlang optimizer driver\n", registry));
+}

@@ -1,0 +1,122 @@
+{
+  "schema_version": 5,
+  "language": "TT-Lang",
+  "status": "Proposed assignment; enable and validate the course runner before submissions.",
+  "seed": 540,
+  "dtype": "FP32 exercise inputs, arithmetic, and outputs; row lengths are int64",
+  "matmul": {
+    "dtype": "BF16 tutorial example",
+    "cases": [
+      [
+        64,
+        128,
+        96
+      ],
+      [
+        1024,
+        1024,
+        1024
+      ],
+      [
+        32,
+        4096,
+        128
+      ],
+      [
+        4096,
+        128,
+        4096
+      ],
+      [
+        96,
+        160,
+        224
+      ],
+      [
+        65,
+        97,
+        33
+      ]
+    ],
+    "baseline_alignment": 32,
+    "blocked_alignment": "M multiple of32*BM, N of32*BN, K of32*BK",
+    "tails": "Harness zero-pads and crops; include preprocessing in end-to-end timing"
+  },
+  "vector": {
+    "lengths": [
+      1,
+      31,
+      33,
+      1023,
+      1024,
+      1025,
+      65537,
+      1048577,
+      16777216,
+      16777217
+    ],
+    "input_shapes": {
+      "a": "[N]",
+      "b": "[N]"
+    },
+    "input_dtype": "torch.float32",
+    "output_shape": "[N]",
+    "output_dtype": "torch.float32",
+    "reference": "pytorch_baselines.py:vector_add_reference"
+  },
+  "ragged": {
+    "input_shape": "[R,L]",
+    "input_dtype": "torch.float32",
+    "lengths_shape": "[R]",
+    "lengths_dtype": "torch.int64",
+    "lengths_range": "0 <= lengths[r] <= L; R >= 1 and L >= 1",
+    "sum_output": "torch.float32 [R]; empty rows return zero",
+    "softmax_output": "torch.float32 [R,L]; entries outside valid prefixes and empty rows are zero",
+    "sum_domain": "finite values",
+    "softmax_domain": "all entries finite in [-80,80]",
+    "reference": "pytorch_baselines.py",
+    "cases": [
+      {
+        "R": 256,
+        "L": 65
+      },
+      {
+        "R": 8192,
+        "L": 96
+      },
+      {
+        "R": 1024,
+        "L": 542
+      },
+      {
+        "R": 1024,
+        "L": 8192
+      },
+      {
+        "R": 32,
+        "L": 16384
+      },
+      {
+        "R": 7,
+        "L": 17
+      },
+      {
+        "R": 33,
+        "L": 1
+      },
+      {
+        "R": 127,
+        "L": 37
+      },
+      {
+        "R": 4097,
+        "L": 257
+      },
+      {
+        "R": 1,
+        "L": 8193
+      }
+    ],
+    "row_length_generation": "For each case, row lengths are randomly generated integers from 0 through L."
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "retrieved": "2026-10-16",
+  "purpose": "Upstream source-reading material; not course-device compiler or profiling captures.",
+  "files": [
+    {
+      "file": "simple_matmul.ttir.mlir",
+      "url": "https://github.com/tenstorrent/tt-mlir/blob/240e14d9b2bdc53b1e9f47ab47fa9188a71a9cae/test/ttmlir/Dialect/TTNN/matmul/simple_matmul.mlir",
+      "git_blob_sha": "b12ba15128b7dc488f5cbc9694ecb3ca2eb1a51c",
+      "kind": "unmodified upstream source"
+    },
+    {
+      "file": "upstream_bmm.cpp",
+      "url": "https://github.com/tenstorrent/tt-metal/blob/7c3dd90a675f0f00316786d01e4f60be42c3c9c0/tt_metal/programming_examples/matmul/matmul_common/kernels/compute/bmm.cpp",
+      "git_blob_sha": "36e4c6abac572ca25fcf2385819df2a6f98f5928",
+      "kind": "unmodified upstream source"
+    },
+    {
+      "file": "flops_matmul_conv.ttnn.mlir",
+      "url": "https://github.com/tenstorrent/tt-mlir/blob/240e14d9b2bdc53b1e9f47ab47fa9188a71a9cae/test/ttmlir/Dialect/TTNN/perf_targets/flops_matmul_conv.mlir",
+      "git_blob_sha": "3a4d474e67d9e514961486569b8860f21a3affaa",
+      "kind": "unmodified upstream source"
+    },
+    {
+      "file": "blackhole_instruction_macros_excerpt.h",
+      "url": "https://github.com/tenstorrent/tt-metal/blob/7c3dd90a675f0f00316786d01e4f60be42c3c9c0/tt_metal/tt-llk/tt_llk_blackhole/common/inc/ckernel_ops.h",
+      "git_blob_sha": "b3c8acd02614b7dc92ee97032b202131dd47b5ae",
+      "kind": "selected exact source lines"
+    }
+  ],
+  "sources": {
+    "ttnn_where": "https://docs.tenstorrent.com/tt-metal/latest/ttnn/ttnn/api/ttnn.where.html",
+    "ttnn_sum": "https://docs.tenstorrent.com/tt-metal/latest/ttnn/ttnn/api/ttnn.sum.html",
+    "ttnn_max": "https://docs.tenstorrent.com/tt-metal/latest/ttnn/ttnn/api/ttnn.max.html",
+    "ttnn_exp": "https://docs.tenstorrent.com/tt-metal/latest/ttnn/ttnn/api/ttnn.exp.html",
+    "blackhole_instruction_issuance": "https://github.com/tenstorrent/tt-isa-documentation/blob/8a34e25e04d1ad7dd129ac9231e126b85923fac3/BlackholeA0/TensixTile/BabyRISCV/PushTensixInstruction.md"
+  },
+  "caveats": [
+    "The TTNN fixture uses a Wormhole system description. Do not label it a Blackhole run.",
+    "simple_matmul.ttir.mlir is a compiler test input. Its CHECK comment expects a ttnn.matmul; it is not an actual lowered output dump.",
+    "upstream_bmm.cpp is a pedagogical Metalium kernel, not evidence this kernel is selected by ttnn.matmul.",
+    "The instruction macros excerpt is real Blackhole inline-assembly source, not disassembled course-device binary.",
+    "No kernels were executed and no performance was measured in this source audit."
+  ]
+}

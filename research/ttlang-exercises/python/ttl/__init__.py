@@ -1,0 +1,196 @@
+# SPDX-FileCopyrightText: (c) 2025 Tenstorrent AI ULC
+#
+# SPDX-License-Identifier: Apache-2.0
+
+# TT-Lang Python Package
+
+from ttl.version import __version__, build_info
+from ttl.domains import (
+    AllToAllTransfer,
+    AxisNeighborTransfer,
+    DeviceDomain,
+    DevicePoint,
+    DeviceRange,
+    DeviceRef,
+    DeviceSelection,
+    DeviceSet,
+    DeviceView,
+    DomainComponent,
+    GatherTransfer,
+    NodeSelection,
+    ScatterTransfer,
+    StencilTransfer,
+    TransferEdge,
+    TransferGraph,
+)
+
+# `ttl._sim_only_marker` is shipped by the tt-lang-sim wheel and absent from
+# the tt-lang wheel. Detection is marker-based, not try/except, so a broken
+# hardware install still raises ImportError instead of silently degrading.
+# `TTLANG_SIM_ONLY=1` is the source-tree equivalent for environments that run
+# the simulator without installing the sim wheel (e.g. the test-sim CI job).
+# The env var is only read when the marker is absent; it has no effect on an
+# installed sim wheel.
+try:
+    import ttl._sim_only_marker  # type: ignore[reportMissingImports] # noqa: F401
+
+    _SIM_ONLY_INSTALL = True
+except ImportError:
+    import os as _os
+
+    _SIM_ONLY_INSTALL = _os.environ.get("TTLANG_SIM_ONLY", "0") == "1"
+
+if _SIM_ONLY_INSTALL:
+    _elementwise_all: list[str] = []
+    __all__ = [
+        "__version__",
+        "build_info",
+        "AllToAllTransfer",
+        "AxisNeighborTransfer",
+        "DeviceDomain",
+        "DevicePoint",
+        "DeviceRange",
+        "DeviceRef",
+        "DeviceSelection",
+        "DeviceSet",
+        "DeviceView",
+        "DomainComponent",
+        "GatherTransfer",
+        "NodeSelection",
+        "ScatterTransfer",
+        "StencilTransfer",
+        "TransferEdge",
+        "TransferGraph",
+    ]
+else:
+    from ttl.ttl import (
+        operation,
+        DFB,
+        Kernel,
+        KernelKind,
+        PIPE_SOURCE_KERNEL,
+        FabricManagerClaim,
+        CoreRuntimeArgs,
+        FabricConnectionBinding,
+        FabricConnectionRequirement,
+        KernelDefine,
+        KernelRuntimeResources,
+        ProgramRuntimeResources,
+        MeshProgramPlacement,
+        DispatchCondition,
+        DFBReset,
+        DFBAddressScope,
+        DFBAllocationGroup,
+        DFBReconfiguration,
+        ScalarType,
+        compute,
+        datamovement,
+        make_dataflow_buffer_like,
+        make_dfb,
+        make_tensor_backed_dfb,
+        make_dfb_allocation_group,
+        copy,
+        node,
+        grid_size,
+        math,
+        block,
+        DFBAccess,
+        DFBEffect,
+        call_extern_func,
+        dfb_descriptor,
+        get_dfb_id,
+        raw_addr,
+        reset_all_dfbs,
+        reset_dfbs,
+        reconfigure_dfbs,
+        uint32,
+        wait_any,
+    )
+
+    from ttl._generated_elementwise import *  # noqa: F401,F403
+    from ttl._generated_elementwise import __all__ as _elementwise_all
+
+    from ttl.operators import signpost
+    from ttl.compiler_options import CompilerOptions
+    from ttl.ttl_api import (
+        CircularBuffer,  # Deprecated, superseded by DataflowBuffer
+        DataflowBuffer,
+        CopyTransferHandler,
+        ReadyReceive,
+        ReceiveRequest,
+        TensorBlock,
+    )
+    from ttl.pipe import Pipe, PipeNet
+
+    __all__ = [
+        "__version__",
+        "build_info",
+        "operation",
+        "DFB",
+        "Kernel",
+        "KernelKind",
+        "PIPE_SOURCE_KERNEL",
+        "FabricManagerClaim",
+        "CoreRuntimeArgs",
+        "FabricConnectionBinding",
+        "FabricConnectionRequirement",
+        "KernelDefine",
+        "KernelRuntimeResources",
+        "ProgramRuntimeResources",
+        "MeshProgramPlacement",
+        "DispatchCondition",
+        "DFBReset",
+        "DFBAddressScope",
+        "DFBAllocationGroup",
+        "DFBReconfiguration",
+        "ScalarType",
+        "compute",
+        "datamovement",
+        "DataflowBuffer",
+        "CircularBuffer",
+        "CompilerOptions",
+        "TensorBlock",
+        "CopyTransferHandler",
+        "ReceiveRequest",
+        "ReadyReceive",
+        "Pipe",
+        "PipeNet",
+        "AllToAllTransfer",
+        "AxisNeighborTransfer",
+        "DeviceDomain",
+        "DevicePoint",
+        "DeviceRange",
+        "DeviceRef",
+        "DeviceSelection",
+        "DeviceSet",
+        "DeviceView",
+        "DomainComponent",
+        "GatherTransfer",
+        "NodeSelection",
+        "ScatterTransfer",
+        "StencilTransfer",
+        "TransferEdge",
+        "TransferGraph",
+        "make_dataflow_buffer_like",
+        "make_dfb",
+        "make_tensor_backed_dfb",
+        "make_dfb_allocation_group",
+        "copy",
+        "node",
+        "grid_size",
+        "math",
+        "block",
+        "signpost",
+        "DFBEffect",
+        "DFBAccess",
+        "call_extern_func",
+        "dfb_descriptor",
+        "get_dfb_id",
+        "raw_addr",
+        "reset_dfbs",
+        "reset_all_dfbs",
+        "reconfigure_dfbs",
+        "uint32",
+        "wait_any",
+        *_elementwise_all,
+    ]
