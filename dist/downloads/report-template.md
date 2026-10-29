@@ -45,7 +45,7 @@ Provide a table of the compilation and execution stages, in sequence, from a TT-
 
 ### Q2. Tensor types and dimensions — 5 points
 
-In matmul_to_compute.mlir, inspect matmul_2x4_4x3. Write the full types of the two input tensors and the result. Convert their tile dimensions into scalar matrix dimensions, and give the number of scalar elements in each tensor.
+In matmul_to_compute.mlir, inspect matmul_2x4_4x3. Write the full types, tile dimensions, and number of tiles of the two input tensors and the result.
 
 
 
