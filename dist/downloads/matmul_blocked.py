@@ -21,7 +21,8 @@ def matmul_blocked(a, b, out):
     assert M % (32 * BM) == 0 and N % (32 * BN) == 0
     assert K % (32 * BK) == 0
     mb, nb, kb = M // (32 * BM), N // (32 * BN), K // (32 * BK)
-    cores = ttl.grid_size(dims=1)
+    grid_cols, grid_rows = ttl.grid_size(dims=2)
+    cores = grid_cols * grid_rows
     per_core = (mb * nb + cores - 1) // cores
     a_dfb = ttl.make_dataflow_buffer_like(a, shape=(BM, BK), block_count=2)
     b_dfb = ttl.make_dataflow_buffer_like(b, shape=(BK, BN), block_count=2)
@@ -29,7 +30,8 @@ def matmul_blocked(a, b, out):
 
     @ttl.datamovement()
     def reader():
-        node = ttl.node(dims=1)
+        node_col, node_row = ttl.node(dims=2)
+        node = node_row * grid_cols + node_col
         for local in range(per_core):
             q = node * per_core + local
             if q < mb * nb:
@@ -43,7 +45,8 @@ def matmul_blocked(a, b, out):
 
     @ttl.compute()
     def compute():
-        node = ttl.node(dims=1)
+        node_col, node_row = ttl.node(dims=2)
+        node = node_row * grid_cols + node_col
         for local in range(per_core):
             q = node * per_core + local
             if q < mb * nb:
@@ -56,7 +59,8 @@ def matmul_blocked(a, b, out):
 
     @ttl.datamovement()
     def writer():
-        node = ttl.node(dims=1)
+        node_col, node_row = ttl.node(dims=2)
+        node = node_row * grid_cols + node_col
         for local in range(per_core):
             q = node * per_core + local
             if q < mb * nb:
