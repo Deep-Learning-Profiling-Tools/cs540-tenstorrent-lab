@@ -22,32 +22,14 @@
   ],
   "teaching_files": [
     {
-      "file": "matmul.py",
-      "sha256": "a0da1807a6053a0eea2b44ffb4bd3c0ef8d5f14c06d23e8c25f7308ff38caf18",
-      "modified": true,
-      "scope": "Course teaching adaptation; source review complete; device tests pending"
-    },
-    {
-      "file": "matmul_larger.py",
-      "sha256": "ca16e16fb48d4fcd09e261bd9e3b618892a76d140a9e9e5d421d2a8ec3b22c1b",
-      "modified": true,
-      "scope": "Course teaching adaptation; source review complete; device tests pending"
-    },
-    {
-      "file": "pytorch_baselines.py",
-      "sha256": "b31adb61565f28d1a5a389107f3f9b60c775c50954fd7aa8e5f5a5815abaf15b",
+      "file": "check_references.py",
+      "sha256": "d50e2ab56ade0a2c92563e9ccb66de398d03c2840940ffd532f2133532076d2d",
       "modified": true,
       "scope": "Course teaching adaptation; source review complete; device tests pending"
     },
     {
       "file": "vector_add.py",
       "sha256": "23ddec094c2b77d32d3d4b3ea40b4c3c246a240254ad8b9d1a9fe33fe3f093e2",
-      "modified": true,
-      "scope": "Course teaching adaptation; source review complete; device tests pending"
-    },
-    {
-      "file": "check_references.py",
-      "sha256": "d50e2ab56ade0a2c92563e9ccb66de398d03c2840940ffd532f2133532076d2d",
       "modified": true,
       "scope": "Course teaching adaptation; source review complete; device tests pending"
     },
@@ -64,8 +46,26 @@
       "scope": "Course teaching adaptation; source review complete; device tests pending"
     },
     {
+      "file": "pytorch_baselines.py",
+      "sha256": "b31adb61565f28d1a5a389107f3f9b60c775c50954fd7aa8e5f5a5815abaf15b",
+      "modified": true,
+      "scope": "Course teaching adaptation; source review complete; device tests pending"
+    },
+    {
       "file": "matmul_blocked.py",
       "sha256": "aebb9e13ab313e3ea68b01c7af9318fed3f465f960af9272c9de7485c436da74",
+      "modified": true,
+      "scope": "Course teaching adaptation; source review complete; device tests pending"
+    },
+    {
+      "file": "matmul.py",
+      "sha256": "a0da1807a6053a0eea2b44ffb4bd3c0ef8d5f14c06d23e8c25f7308ff38caf18",
+      "modified": true,
+      "scope": "Course teaching adaptation; source review complete; device tests pending"
+    },
+    {
+      "file": "matmul_larger.py",
+      "sha256": "ca16e16fb48d4fcd09e261bd9e3b618892a76d140a9e9e5d421d2a8ec3b22c1b",
       "modified": true,
       "scope": "Course teaching adaptation; source review complete; device tests pending"
     }
