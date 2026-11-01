@@ -53,7 +53,7 @@
     },
     {
       "file": "matmul_blocked.py",
-      "sha256": "45cdb87090b9cba863f12d83ee9e70848728e206de51f46756c862bc1abc0c0d",
+      "sha256": "aebb9e13ab313e3ea68b01c7af9318fed3f465f960af9272c9de7485c436da74",
       "modified": true,
       "scope": "Course teaching adaptation; source review complete; device tests pending"
     },
